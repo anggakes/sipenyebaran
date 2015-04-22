@@ -1,0 +1,16 @@
+@media print{
+
+	.row, #btnprint{
+		display: none;
+	}
+
+	#kop, #tertanda{
+		display: inherit;
+	}
+}
+
+@media screen{
+	#kop, #tertanda{
+		display: none;
+	}
+}

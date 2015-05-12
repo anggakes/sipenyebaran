@@ -21,6 +21,22 @@ class ProyekController extends Controller {
 		$this->middleware('auth',['except'=>['indexHome','getKordinat','getTahun']]);
 	}
 
+	private function formatRupiah($nilai)
+	{
+	    $nilaiRp = "";
+	    $jumlahangka = strlen($nilai);
+	    while ($jumlahangka > 3) 
+	    {
+	        $nilaiRp = "." . substr($nilai,-3) . $nilaiRp;
+	        $sisaNilai = strlen($nilai) - 3;
+	        $nilai = substr($nilai, 0, $sisaNilai);
+	        $jumlahangka = strlen($nilai);
+	    }
+
+	    $nilaiRp = "Rp " . $nilai . $nilaiRp . "";
+	    return $nilaiRp;
+	}
+
 	public function index()
 	{
 		$proyek=Proyek::all();
@@ -65,7 +81,7 @@ class ProyekController extends Controller {
 		return response()->json(["klat"=>-2.96302559, "klng"=>104.753480,"zoom"=>13]);
 		}
 		$kecamatan=Kecamatan::find($id);
-		return response()->json(["klat"=> $kecamatan->lat, "klng"=>$kecamatan->lng,"zoom"=>16]);
+		return response()->json(["klat"=> $kecamatan->lat, "klng"=>$kecamatan->lng,"zoom"=>15]);
 	}
 
 	public function getTahun($tahun)
@@ -76,6 +92,18 @@ class ProyekController extends Controller {
 		$proyekth=Proyek::whereRaw("Year(mulai)=$tahun")->get();
 		}
 		foreach ($proyekth as $key => $value) {
+
+			if($value->id_parent != null):
+		        $content="";
+		        foreach ($value->lanjutan($value->id_parent) as $i => $p):
+		            $content.= "Proyek : $p->nama <br> Kontraktor  : ".$p->kontraktor->nama." <br>Kecamatan : ".$p->kecamatan->nama." <br> Nilai : ".$this->formatRupiah($p->nilai)." <br>Mulai : $p->mulai <br> Akhir : $p->akhir <hr>";
+		        endforeach;
+		         $content.="Proyek :". $value->parent($value->id_parent)->nama ."<br> Kontraktor  : ".$value->parent($value->id_parent)->kontraktor->nama." <br>Kecamatan : ".$value->parent($value->id_parent)->kecamatan->nama." <br> Nilai : ".$this->formatRupiah($value->parent($value->id_parent)->nilai)." <br>Mulai :". $value->parent($value->id_parent)->mulai. "<br> Akhir :". $value->parent($value->id_parent)->akhir ;
+		        else:
+		            $content="Proyek : $value->nama <br> Kontraktor  : ".$value->kontraktor->nama." <br>Kecamatan : ".$value->kecamatan->nama." <br> Nilai : ".$this->formatRupiah($value->nilai)." <br>Mulai : $value->mulai <br> Akhir : $value->akhir ";
+		    endif;
+
+
 			$data[$key]['lat'] = $value->lokasi->lat;
 			$data[$key]['lng'] = $value->lokasi->lng;
 			$data[$key]['nama'] = $value->nama;
@@ -84,6 +112,7 @@ class ProyekController extends Controller {
 			$data[$key]['nilai'] = $value->nilai;			
 			$data[$key]['mulai'] = $value->mulai;
 			$data[$key]['akhir'] = $value->akhir;
+			$data[$key]['isi'] = $content;
 		}
 		return response()->json($data);
 	}
@@ -166,7 +195,7 @@ class ProyekController extends Controller {
 			$l[7] = "
 				<a href='".route('proyek.edit',$value->id)."'>Edit</a> | 
 				<a href='".route('proyek.destroy',$value->id)."' data-method = 'DELETE' data-confirm='Yakin untuk menghapus data?' >Hapus</a> |
-				<a href='".url('proyek/create?id='.$value->id)."'>Lanjutan</a>
+				<a href='".url('proyek/create?id='.$value->id)."'>Teruskan</a>
 			";
 
 			$data[$i]=$l;

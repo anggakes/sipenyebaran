@@ -95,7 +95,7 @@ trait AuthenticatesAndRegistersUsers {
 	 */
 	protected function getFailedLoginMessage()
 	{
-		return 'Data yang ada masukkan salah.';
+		return 'Data yang anda masukkan salah.';
 	}
 
 	/**

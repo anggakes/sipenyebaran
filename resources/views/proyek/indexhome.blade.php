@@ -115,7 +115,7 @@ $(document).ready(function() {
                     lng: data[ax].lng,
                     title: data[ax].nama,
                     infoWindow: {
-                      content:'Proyek : '+data[ax].nama+'<br>Kontraktor  : '+data[ax].kontraktor+'<br>Kecamatan : '+data[ax].kecamatan+'<br>Nilai : '+data[ax].nilai+'<br>Mulai : '+data[ax].mulai+'<br>Akhir : '+data[ax].akhir
+                      content:data[ax].isi,
                     }
                     });
                      markers.push(marker);

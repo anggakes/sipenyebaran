@@ -1,4 +1,4 @@
-<?php
+ <?php
 	use App\Kecamatan;
 	use App\Proyek;
 
@@ -41,8 +41,9 @@
 	<div class="controls" style="float:right;" id="tertanda">
 		<br><br>
        Palembang,  {!! date('d-m-Y',strtotime($timezone)) !!}
-       <p>Tertanda,</p>
-       <br /><br />
-       <p>Admin</p>
+       <p>Kasi Alkal Bidang PSDA</p>
+       <br><br><br>
+       <p><u>Erlianto Hona Saputra, M.T</u><br>
+       NIP. 198211042009031001</p>
     </div>
 @stop

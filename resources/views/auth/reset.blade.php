@@ -1,4 +1,4 @@
-@extends('app')
+@extends('gishome')
 
 @section('content')
 <div class="container-fluid">

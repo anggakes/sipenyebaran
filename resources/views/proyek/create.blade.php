@@ -18,6 +18,33 @@
 
 @section('footer')
 <script>
+function getIdKec(nama){
+	 $.ajax({
+            url:'{!! url("kecamatanproyek") !!}/'+nama,
+            type: 'get',
+            dataType: 'json',
+        
+            success: function(data){
+              	if(data==0){
+              		alert('daerah belum terdaftar');
+              	}
+              		$('#kecamatan').val(data);
+            }
+    });
+}
+
+function setKec(lat,lng){
+	$.ajax({
+            url:"https://maps.googleapis.com/maps/api/geocode/json?latlng="+lat+","+lng+"&key=AIzaSyCa__6FyZEWsQijw6lPR08tQMs1ERDBFes",
+        	cache: true
+		}).done(function(html){
+			var x = html.results[0].formatted_address.split(', ');
+			var y = x[1];
+
+			$('#kecam').val(y);
+			getIdKec(y);
+		});
+}
 
 function setMap(lat, lng){
 
@@ -33,12 +60,13 @@ function setMap(lat, lng){
 			    position:myLatlng,
 			    draggable: true
 			});
-	google.maps.event.addListener(marker, "position_changed", function(event) {
+	google.maps.event.addListener(marker, "dragend", function(event) {
 	    var lat = this.position.lat();
 	    var lng = this.position.lng();
 	 
 	    $('#lat').val(lat);
 		$('#lng').val(lng);	
+		setKec(lat,lng);
 	});
 	
 	$('#lat').val(lat);
@@ -49,8 +77,11 @@ setMap(
 	{!! (!isset($proyek))  ? '-2.96302559' : $proyek->lokasi->lat !!},
 	{!! (!isset($proyek))  ? '104.753480' : $proyek->lokasi->lng !!}
 	);
-
-$(document).ready(function() {
+setKec(
+	{!! (!isset($proyek))  ? '-2.96302559' : $proyek->lokasi->lat !!},
+	{!! (!isset($proyek))  ? '104.753480' : $proyek->lokasi->lng !!}
+	);
+/*$(document).ready(function() {
 	
     $('#kecamatan').change(function(){
         var isi=$('#kecamatan').val();
@@ -65,7 +96,16 @@ $(document).ready(function() {
         });
     });
 
+});*/
+$(document).ready(function() {
+	
+    $('#lat').change(function(){
+        var lat=$('#lat').val();
+        var lng=$('#lng').val();
+    });
+
 });
+
 </script>
 <script type="text/javascript">
 $(document).ready(function(){
@@ -83,4 +123,5 @@ $('#kontraktor').prepend('<option selected=true  value="" style="visibility:hidd
 $("#kontraktor")[0].setAttribute("required", "required");
 });
 </script>
+
 @stop

@@ -24,7 +24,8 @@ use App\Kecamatan;
     {!!Html::style('assets/ruma/css/style.css')!!}  
     {!!Html::style('http://fonts.googleapis.com/css?family=Open+Sans')!!} 
     {!!Html::script('https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js')!!} 
-    {!!Html::script('http://maps.google.com/maps/api/js?sensor=true')!!}
+    <!--{!!Html::script('http://maps.google.com/maps/api/js?sensor=true')!!}-->
+    {!!Html::script('https://maps.googleapis.com/maps/api/js?key=AIzaSyCa__6FyZEWsQijw6lPR08tQMs1ERDBFes')!!}
     {!!Html::script('assets/gmaps.js')!!}
     {!!Html::style('assets/sb-admin-2.css')!!}
     {!!Html::style('assets/bootstrap/js/bootstrap.min.js')!!}

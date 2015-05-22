@@ -10,7 +10,7 @@
 
 		<div class="form-group">
 			{!! Form::label('kecamatan','Kecamatan :') !!}
-			{!! Form::select('proyek[id_kecamatan]', $kecamatan, @$proyek->id_kecamatan, ['id'=>'kecamatan', 'class'=>'form-control'])!!}
+			{!! Form::select('proyek[id_kecamatan]', $kecamatan, @$proyek->id_kecamatan, ['id'=>'kecamatan', 'class'=>'form-control','readonly'])!!}
 		</div>
 
 		<div class="form-group">
@@ -42,3 +42,7 @@
 			{!! Form::submit($submitButtonText,['class'=>'btn btn-primary form-control']) !!}
 		</div>
 	
+		<div class="form-group" style='display:none'>
+				{!! Form::label('kecamatan','Kecamatan :') !!}
+				{!! Form::text('x',null,['class'=>'form-control','id'=>'kecam']) !!}
+		</div>

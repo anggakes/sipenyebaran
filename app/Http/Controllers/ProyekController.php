@@ -75,6 +75,16 @@ class ProyekController extends Controller {
 		->with('kecamatan',$kecamatan);
 	}
 
+	public function getKecam($kec){
+		$kec=Kecamatan::where('gmapnama','like',"%$kec%")->first();
+		if(count($kec)>0){
+		return $kec->id;
+		}else{
+			return 0;
+		}
+
+	}
+
 	public function getKordinat($id)
 	{
 		if($id==0){

@@ -23,6 +23,7 @@ Route::get('laporan','ProyekController@adminLaporan');
 
 Route::get('kecamatankordinat/{id}','ProyekController@getKordinat');
 Route::get('tahunproyek/{tahun}','ProyekController@getTahun');
+Route::get('kecamatanproyek/{kecamatan}','ProyekController@getKecam');
 Route::get(
 	'proyek/datatables',
 	['as'=>'proyek.datatables',
@@ -34,3 +35,7 @@ Route::get(
 	['as'=>'kontraktor.datatables',
 	'uses'=>'KontraktorController@datatables']);
 Route::resource('kontraktor', 'KontraktorController');
+
+Route::get('test', function(){
+	return view('test.teskecamatan');
+});
